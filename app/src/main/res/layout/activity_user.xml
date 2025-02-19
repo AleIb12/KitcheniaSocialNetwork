@@ -204,7 +204,12 @@
                 android:layout_marginTop="20dp"
                 android:textColor="@android:color/black" />
 
-            <!-- Aquí puedes agregar el contenido dinámico de las publicaciones -->
+            <!-- RecyclerView de las imágenes del usuario -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvUserImages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" />
 
         </LinearLayout>
     </ScrollView>

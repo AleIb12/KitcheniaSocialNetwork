@@ -7,14 +7,27 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
+import com.example.kitchenia.card.Carta;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserProfileActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -29,6 +42,11 @@ public class UserProfileActivity extends AppCompatActivity {
     private boolean isFollowing;
     private int followersCount;
     private FirebaseFirestore db;
+
+    // New fields for the RecyclerView
+    private RecyclerView rvUserImages;
+    private List<Carta> userCartasList;
+    private CartaAdapter userCartaAdapter;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -60,7 +78,6 @@ public class UserProfileActivity extends AppCompatActivity {
         isFollowing = preferences.getBoolean("IS_FOLLOWING", false);
         tvFollowersCount.setText(String.valueOf(followersCount));
 
-        // Fetch username from Firestore
         if (mAuth.getCurrentUser() != null) {
             String userId = mAuth.getCurrentUser().getUid();
             db.collection("users").document(userId).get()
@@ -77,6 +94,16 @@ public class UserProfileActivity extends AppCompatActivity {
 
         actualizarBotonSeguir();
         cargarImagenPerfil();
+
+        // Initialize RecyclerView for user cards
+        rvUserImages = findViewById(R.id.rvUserImages);
+        rvUserImages.setLayoutManager(new LinearLayoutManager(this));
+        userCartasList = new ArrayList<>();
+        userCartaAdapter = new CartaAdapter(userCartasList);
+        rvUserImages.setAdapter(userCartaAdapter);
+
+        // Load user's cards
+        cargarCartasDelUsuario();
 
         btnEditDescription.setOnClickListener(v -> {
             etDescription.setEnabled(true);
@@ -110,6 +137,36 @@ public class UserProfileActivity extends AppCompatActivity {
             }
             return false;
         });
+    }
+
+    // Load user's cards from Firestore
+    private void cargarCartasDelUsuario() {
+        if (mAuth.getCurrentUser() != null) {
+            String userId = mAuth.getCurrentUser().getUid();
+            db.collection("imagenes")
+                    .whereEqualTo("userId", userId)
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        userCartasList.clear();
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            UploadPhotoActivity.Imagen imagen =
+                                    document.toObject(UploadPhotoActivity.Imagen.class);
+                            Carta carta = new Carta(
+                                "Receta " + document.getId(),
+                                imagen.getDescripcion(),
+                                0,
+                                false,
+                                false,
+                                imagen.getUrl()
+                            );
+                            userCartasList.add(carta);
+                        }
+                        userCartaAdapter.notifyDataSetChanged();
+                    })
+                    .addOnFailureListener(e ->
+                        Toast.makeText(this, "Error loading user cards", Toast.LENGTH_SHORT).show()
+                    );
+        }
     }
 
     private void openFileChooser() {
