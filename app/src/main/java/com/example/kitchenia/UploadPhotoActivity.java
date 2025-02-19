@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,11 +15,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 
 public class UploadPhotoActivity extends AppCompatActivity {
 
@@ -28,12 +27,12 @@ public class UploadPhotoActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private FirebaseFirestore firestore;
     private ActivityResultLauncher<Intent> imagePickerLauncher;
+    private ProgressDialog progressDialog; // Agregamos el ProgressDialog
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_photo);
-
 
         storage = FirebaseStorage.getInstance();
         firestore = FirebaseFirestore.getInstance();
@@ -43,6 +42,10 @@ public class UploadPhotoActivity extends AppCompatActivity {
         imageViewPreview = findViewById(R.id.imageViewPreview);
         editTextDescripcion = findViewById(R.id.editTextDescripcion);
 
+        // Inicializa ProgressDialog
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Subiendo imagen...");
+        progressDialog.setCancelable(false); // No permitir que el usuario lo cierre manualmente
 
         // Inicializa el ActivityResultLauncher para seleccionar imagen
         imagePickerLauncher = registerForActivityResult(
@@ -71,6 +74,7 @@ public class UploadPhotoActivity extends AppCompatActivity {
                 Toast.makeText(this, "Por favor selecciona una imagen", Toast.LENGTH_SHORT).show();
             }
         });
+
         // Setup bottom navigation
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
@@ -88,6 +92,8 @@ public class UploadPhotoActivity extends AppCompatActivity {
     }
 
     private void subirImagenAFirebase() {
+        progressDialog.show(); // Muestra el ProgressDialog antes de iniciar la subida
+
         StorageReference ref = storage.getReference().child("imagenes/" + System.currentTimeMillis() + ".jpg");
         ref.putFile(imageUri)
                 .addOnSuccessListener(taskSnapshot ->
@@ -97,18 +103,22 @@ public class UploadPhotoActivity extends AppCompatActivity {
                                     firestore.collection("imagenes")
                                             .add(new Imagen(descripcion, uri.toString()))
                                             .addOnSuccessListener(documentReference -> {
+                                                progressDialog.dismiss(); // Oculta el ProgressDialog
                                                 Toast.makeText(UploadPhotoActivity.this, "Imagen subida exitosamente", Toast.LENGTH_SHORT).show();
                                             })
                                             .addOnFailureListener(e -> {
+                                                progressDialog.dismiss();
                                                 Toast.makeText(UploadPhotoActivity.this, "Error al guardar datos en Firestore", Toast.LENGTH_SHORT).show();
                                                 Log.e("UploadPhotoActivity", "Error en Firestore", e);
                                             });
                                 })
                                 .addOnFailureListener(e -> {
+                                    progressDialog.dismiss();
                                     Toast.makeText(UploadPhotoActivity.this, "Error al obtener URL de descarga", Toast.LENGTH_SHORT).show();
                                     Log.e("UploadPhotoActivity", "Error en getDownloadUrl", e);
                                 }))
                 .addOnFailureListener(e -> {
+                    progressDialog.dismiss();
                     Toast.makeText(UploadPhotoActivity.this, "Error al subir imagen", Toast.LENGTH_SHORT).show();
                     Log.e("UploadPhotoActivity", "Error al subir imagen", e);
                 });
