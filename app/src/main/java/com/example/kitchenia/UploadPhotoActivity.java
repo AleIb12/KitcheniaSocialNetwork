@@ -27,7 +27,7 @@ public class UploadPhotoActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private FirebaseFirestore firestore;
     private ActivityResultLauncher<Intent> imagePickerLauncher;
-    private ProgressDialog progressDialog; // Agregamos el ProgressDialog
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class UploadPhotoActivity extends AppCompatActivity {
         // Inicializa ProgressDialog
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Subiendo imagen...");
-        progressDialog.setCancelable(false); // No permitir que el usuario lo cierre manualmente
+        progressDialog.setCancelable(false);
 
         // Inicializa el ActivityResultLauncher para seleccionar imagen
         imagePickerLauncher = registerForActivityResult(
