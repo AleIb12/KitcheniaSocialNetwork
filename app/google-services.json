@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "241563841019",
+    "project_id": "kitchenia-a5d3d",
+    "storage_bucket": "kitchenia-a5d3d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:241563841019:android:d653061177ac0ffcc5db5e",
+        "android_client_info": {
+          "package_name": "com.example.kitchenia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "241563841019-f8st6hmu5399m5m1b6gsut0631fmmplc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kitchenia",
+            "certificate_hash": "d6967e81c488f8dd19d98760b451c67ac3f80dfc"
+          }
+        },
+        {
+          "client_id": "241563841019-a0m0biraej04g2msk2adk973jm8vbl76.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHariJQDnhMEpeCl0T5E070Y2Mqsc7ROk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "241563841019-a0m0biraej04g2msk2adk973jm8vbl76.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
