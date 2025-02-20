@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:padding="16dp"
     tools:context=".UserProfileActivity">
 
@@ -14,18 +14,17 @@
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:id="@+id/contentLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
 
             <!-- Imagen de perfil -->
             <ImageView
@@ -33,108 +32,108 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="16dp"
-                android:contentDescription="@+string/profile_image"
                 android:scaleType="centerCrop"
-                android:src="@drawable/default_profile" />
+                android:src="@drawable/default_profile"
+                android:contentDescription="@+string/profile_image" />
 
             <!-- Botón para cambiar imagen -->
             <Button
                 android:id="@+id/btnChangeProfileImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Cambiar Imagen" />
+                android:text="Cambiar Imagen"
+                android:layout_marginTop="8dp" />
 
             <!-- Nombre de usuario -->
             <TextView
                 android:id="@+id/tvUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
                 android:text="Username"
-                android:textColor="@android:color/black"
                 android:textSize="22sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"
+                android:textColor="@android:color/black" />
 
             <!-- Estadísticas (Posts, Seguidores, Seguidos) -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:gravity="center"
                 android:orientation="horizontal"
+                android:gravity="center"
                 android:weightSum="3">
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
 
                     <TextView
                         android:id="@+id/tvPostCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
-                        android:textColor="@android:color/darker_gray"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textColor="@android:color/darker_gray" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Posts"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textColor="@android:color/darker_gray" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
 
                     <TextView
                         android:id="@+id/tvFollowersCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
-                        android:textColor="@android:color/darker_gray"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textColor="@android:color/darker_gray" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Seguidores"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textColor="@android:color/darker_gray" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
 
                     <TextView
                         android:id="@+id/tvFollowingCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
-                        android:textColor="@android:color/darker_gray"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textColor="@android:color/darker_gray" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Seguidos"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textColor="@android:color/darker_gray" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -143,45 +142,45 @@
                 android:id="@+id/btnFollow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:text="Seguir"
                 android:backgroundTint="@color/colorAccent"
+                android:textColor="@android:color/white"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:text="Seguir"
-                android:textColor="@android:color/white" />
+                android:layout_marginTop="12dp" />
 
             <!-- Título y descripción -->
             <TextView
                 android:id="@+id/tvDescriptionTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:text="Descripción"
-                android:textColor="@android:color/black"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:textColor="@android:color/black" />
 
             <EditText
                 android:id="@+id/etDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/edit_text_background"
                 android:hint="Agrega una descripción..."
                 android:padding="10dp"
+                android:background="@drawable/edit_text_background"
                 android:textColor="@android:color/black"
-                android:textColorHint="@android:color/darker_gray" />
+                android:textColorHint="@android:color/darker_gray"
+                android:layout_marginTop="8dp" />
 
             <Button
                 android:id="@+id/btnSaveDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:text="Guardar"
                 android:backgroundTint="@color/colorPrimary"
+                android:textColor="@android:color/white"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:text="Guardar"
-                android:textColor="@android:color/white"
+                android:layout_marginTop="8dp"
                 android:visibility="gone" />
 
             <!-- Botón para editar biografía -->
@@ -189,21 +188,21 @@
                 android:id="@+id/btnEditBio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:backgroundTint="@color/colorPrimaryDark"
                 android:text="Editar Biografía"
-                android:textColor="@android:color/white" />
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:textColor="@android:color/white"
+                android:layout_marginTop="12dp" />
 
             <!-- Sección de publicaciones -->
             <TextView
                 android:id="@+id/tvPublications"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:text="Publicaciones"
-                android:textColor="@android:color/black"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:textColor="@android:color/black" />
 
             <!-- RecyclerView de las imágenes del usuario -->
             <androidx.recyclerview.widget.RecyclerView
@@ -220,11 +219,10 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:menu="@menu/bottom_nav_menu"
         android:layout_marginBottom="16dp"
-        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
