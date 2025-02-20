@@ -1,30 +1,36 @@
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    android:backgroundTint="#D0C2C2"
     app:cardCornerRadius="12dp"
     app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#A29E9E"
         android:padding="12dp">
 
         <!-- Nombre de usuario encima de la imagen -->
+
+        <!-- Imagen de la card -->
         <TextView
             android:id="@+id/textViewUsername"
             android:layout_width="266dp"
             android:layout_height="33dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/sigmar"
+            android:gravity="center"
             android:text="Nombre de Usuario"
             android:textAppearance="?attr/textAppearanceSubtitle1"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.38"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Imagen de la card -->
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="0dp"
@@ -32,8 +38,8 @@
             android:layout_marginTop="8dp"
             android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewUsername" />
 
         <!-- Descripción minimalista -->
@@ -43,12 +49,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ellipsize="end"
+            android:fontFamily="@font/sigmar"
             android:maxLines="2"
             android:text="Descripción de la receta o imagen"
             android:textAppearance="?attr/textAppearanceBody1"
             android:textColor="@android:color/black"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <!-- Botón de like minimalista -->
@@ -58,10 +65,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:backgroundTint="#D1D1D1"
             android:src="@drawable/thumb_up_24"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDescription"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
