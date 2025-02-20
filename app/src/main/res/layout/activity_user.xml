@@ -26,7 +26,7 @@
             android:orientation="vertical"
             android:gravity="center_horizontal">
 
-            <!-- Imagen de perfil -->
+            <!-- Imagen de perfil interactiva -->
             <ImageView
                 android:id="@+id/ivProfileImage"
                 android:layout_width="120dp"
@@ -34,15 +34,10 @@
                 android:layout_marginTop="16dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_profile"
-                android:contentDescription="@+string/profile_image" />
-
-            <!-- Botón para cambiar imagen -->
-            <Button
-                android:id="@+id/btnChangeProfileImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cambiar Imagen"
-                android:layout_marginTop="8dp" />
+                android:contentDescription="@String/profile_image"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless" />
 
             <!-- Nombre de usuario -->
             <TextView
@@ -160,6 +155,7 @@
                 android:layout_marginTop="20dp"
                 android:textColor="@android:color/black" />
 
+            <!-- EditText para la biografía: inicia con inputType="none" para no permitir edición -->
             <EditText
                 android:id="@+id/etDescription"
                 android:layout_width="match_parent"
@@ -169,8 +165,10 @@
                 android:background="@drawable/edit_text_background"
                 android:textColor="@android:color/black"
                 android:textColorHint="@android:color/darker_gray"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="8dp"
+                android:inputType="none" />
 
+            <!-- Botón para guardar la biografía, solo visible al editar -->
             <Button
                 android:id="@+id/btnSaveDescription"
                 android:layout_width="wrap_content"
@@ -182,16 +180,6 @@
                 android:paddingRight="16dp"
                 android:layout_marginTop="8dp"
                 android:visibility="gone" />
-
-            <!-- Botón para editar biografía -->
-            <Button
-                android:id="@+id/btnEditBio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Editar Biografía"
-                android:backgroundTint="@color/colorPrimaryDark"
-                android:textColor="@android:color/white"
-                android:layout_marginTop="12dp" />
 
             <!-- Sección de publicaciones -->
             <TextView
