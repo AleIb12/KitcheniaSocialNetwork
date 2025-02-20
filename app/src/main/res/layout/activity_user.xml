@@ -51,8 +51,6 @@
                 android:focusable="true"
                 android:background="?attr/selectableItemBackgroundBorderless" />
 
-
-
             <!-- Nombre de usuario -->
             <TextView
                 android:id="@+id/tvUsername"
@@ -152,7 +150,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Seguir"
-                android:backgroundTint="@color/colorAccent"
+                android:backgroundTint="@color/colorPrimary"
                 android:textColor="@android:color/white"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
