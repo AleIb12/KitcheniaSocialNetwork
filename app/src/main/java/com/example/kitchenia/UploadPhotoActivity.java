@@ -36,7 +36,6 @@ public class UploadPhotoActivity extends AppCompatActivity {
 
         storage = FirebaseStorage.getInstance();
         firestore = FirebaseFirestore.getInstance();
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         Button buttonSelectImage = findViewById(R.id.buttonSelectImage);
         Button buttonSendPhoto = findViewById(R.id.buttonSendPhoto);
         imageViewPreview = findViewById(R.id.imageViewPreview);
@@ -75,8 +74,10 @@ public class UploadPhotoActivity extends AppCompatActivity {
             }
         });
 
-        // Setup bottom navigation
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.nav_upload);
         bottomNavigationView.setOnItemSelectedListener(item -> {
+
             int itemId = item.getItemId();
             if (itemId == R.id.nav_home) {
                 startActivity(new Intent(this, MainActivity.class));
