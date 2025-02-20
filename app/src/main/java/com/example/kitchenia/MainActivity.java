@@ -17,11 +17,24 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Main activity of the application.
+ * Displays a list of Carta objects and provides search functionality.
+ */
 public class MainActivity extends AppCompatActivity {
+
     private CartaAdapter cartaAdapter;
     private List<Carta> cartasList;
     private FirebaseFirestore db;
 
+    /**
+     * Called when the activity is first created.
+     * Initializes the UI elements and sets up Firebase.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     * previously being shut down then this Bundle contains the data it most
+     * recently supplied in onSaveInstanceState(Bundle). Note: Otherwise it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,55 +90,67 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Called when the activity is resumed.
+     * Reloads all Carta objects.
+     */
     @Override
     protected void onResume() {
         super.onResume();
         cargarTodasLasCartas();
     }
 
-   private void cargarTodasLasCartas() {
-       db.collection("imagenes")
-           .get()
-           .addOnSuccessListener(queryDocumentSnapshots -> {
-               cartasList.clear();
-               for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                   UploadPhotoActivity.Imagen imagen = document.toObject(UploadPhotoActivity.Imagen.class);
-                   Carta carta = new Carta(
-                       "Receta " + document.getId(),
-                       imagen.getDescripcion(),
-                       0,
-                       false,
-                       false,
-                       imagen.getUrl() // Pass the URL from Firestore
-                   );
-                   cartasList.add(carta);
-               }
-               cartaAdapter.notifyDataSetChanged();
-           })
-           .addOnFailureListener(e -> Log.e("MainActivity", "Error al cargar cartas", e));
-   }
+    /**
+     * Loads all Carta objects from Firestore and updates the RecyclerView.
+     */
+    private void cargarTodasLasCartas() {
+        db.collection("imagenes")
+            .get()
+            .addOnSuccessListener(queryDocumentSnapshots -> {
+                cartasList.clear();
+                for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                    UploadPhotoActivity.Imagen imagen = document.toObject(UploadPhotoActivity.Imagen.class);
+                    Carta carta = new Carta(
+                        "Receta " + document.getId(),
+                        imagen.getDescripcion(),
+                        0,
+                        false,
+                        false,
+                        imagen.getUrl() // Pass the URL from Firestore
+                    );
+                    cartasList.add(carta);
+                }
+                cartaAdapter.notifyDataSetChanged();
+            })
+            .addOnFailureListener(e -> Log.e("MainActivity", "Error al cargar cartas", e));
+    }
 
-   private void buscarCartas(String query) {
-       db.collection("imagenes")
-           .whereGreaterThanOrEqualTo("descripcion", query)
-           .whereLessThanOrEqualTo("descripcion", query + "\uf8ff")
-           .get()
-           .addOnSuccessListener(queryDocumentSnapshots -> {
-               cartasList.clear();
-               for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                   UploadPhotoActivity.Imagen imagen = document.toObject(UploadPhotoActivity.Imagen.class);
-                   Carta carta = new Carta(
-                       "Receta " + document.getId(),
-                       imagen.getDescripcion(),
-                       0,
-                       false,
-                       false,
-                       imagen.getUrl() // Pass the URL from Firestore
-                   );
-                   cartasList.add(carta);
-               }
-               cartaAdapter.notifyDataSetChanged();
-           })
-           .addOnFailureListener(e -> Log.e("MainActivity", "Error en la búsqueda", e));
-   }
+    /**
+     * Searches for Carta objects in Firestore based on the query and updates the RecyclerView.
+     *
+     * @param query The search query.
+     */
+    private void buscarCartas(String query) {
+        db.collection("imagenes")
+            .whereGreaterThanOrEqualTo("descripcion", query)
+            .whereLessThanOrEqualTo("descripcion", query + "\uf8ff")
+            .get()
+            .addOnSuccessListener(queryDocumentSnapshots -> {
+                cartasList.clear();
+                for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                    UploadPhotoActivity.Imagen imagen = document.toObject(UploadPhotoActivity.Imagen.class);
+                    Carta carta = new Carta(
+                        "Receta " + document.getId(),
+                        imagen.getDescripcion(),
+                        0,
+                        false,
+                        false,
+                        imagen.getUrl() // Pass the URL from Firestore
+                    );
+                    cartasList.add(carta);
+                }
+                cartaAdapter.notifyDataSetChanged();
+            })
+            .addOnFailureListener(e -> Log.e("MainActivity", "Error en la búsqueda", e));
+    }
 }
