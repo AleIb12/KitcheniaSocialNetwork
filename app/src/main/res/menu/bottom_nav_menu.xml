@@ -3,13 +3,16 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home"
+        android:fontFamily="@font/sigmar"
         android:title="Home" />
     <item
         android:id="@+id/nav_upload"
         android:icon="@drawable/ic_upload"
+        android:fontFamily="@font/sigmar"
         android:title="Subir" />
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_profile"
+        android:fontFamily="@font/sigmar"
         android:title="Perfil" />
 </menu>
