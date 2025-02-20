@@ -61,6 +61,9 @@ dependencies {
     androidTestImplementation ("org.mockito:mockito-android:4.0.0")
     // Dependencia para Google Sign-In
     implementation ("com.google.android.gms:play-services-auth:20.5.0")
+    implementation ("com.google.firebase:firebase-auth:21.0.1")
+    implementation ("com.google.firebase:firebase-firestore:24.0.1")
+    implementation ("com.google.firebase:firebase-storage:20.0.1")
 
     // Si también usas Firebase Authentication, podrías necesitar:
     implementation ("com.google.firebase:firebase-auth:21.0.1")

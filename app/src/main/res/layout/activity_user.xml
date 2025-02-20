@@ -25,7 +25,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center_horizontal">
-
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:title="Mi Perfil"
+                app:titleTextColor="@android:color/white"/>
             <!-- Imagen de perfil interactiva -->
             <ImageView
                 android:id="@+id/ivProfileImage"
@@ -38,6 +44,8 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?attr/selectableItemBackgroundBorderless" />
+
+
 
             <!-- Nombre de usuario -->
             <TextView
