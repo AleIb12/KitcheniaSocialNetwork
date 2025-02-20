@@ -34,7 +34,7 @@
                 android:layout_marginTop="16dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_profile"
-                android:contentDescription="@String/profile_image"
+                android:contentDescription="@strings/profile_image"
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?attr/selectableItemBackgroundBorderless" />
