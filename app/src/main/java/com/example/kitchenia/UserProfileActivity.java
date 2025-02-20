@@ -20,6 +20,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
 
@@ -285,16 +287,18 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_logout) {
-            // Cerrar sesión y redirigir a LoginActivity
-            Intent intent = new Intent(this, LoginActivity.class);
+            FirebaseAuth.getInstance().signOut();  // Cerrar sesión en Firebase
+            Intent intent = new Intent(this, LoginActivity.class); // Ir a la pantalla de login
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+            finish(); // Cerrar la actividad actual
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     // Carga las cartas (imágenes) del usuario desde Firestore
     private void cargarCartasDelUsuario() {
