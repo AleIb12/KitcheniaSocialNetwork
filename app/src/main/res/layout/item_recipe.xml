@@ -9,19 +9,27 @@
     app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="393dp"
+        android:layout_height="match_parent"
         android:background="#A29E9E"
-        android:padding="12dp">
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        tools:layout_editor_absoluteX="1dp">
 
         <!-- Nombre de usuario encima de la imagen -->
 
         <!-- Imagen de la card -->
         <TextView
             android:id="@+id/textViewUsername"
-            android:layout_width="266dp"
-            android:layout_height="33dp"
+            android:layout_width="309dp"
+            android:layout_height="32dp"
             android:layout_marginTop="4dp"
+            android:background="#FDFDFD"
             android:fontFamily="@font/sigmar"
             android:gravity="center"
             android:text="Nombre de Usuario"
@@ -33,8 +41,8 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="350dp"
+            android:layout_height="276dp"
             android:layout_marginTop="8dp"
             android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="1:1"
@@ -48,8 +56,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:background="#F8F7F7"
             android:ellipsize="end"
             android:fontFamily="@font/sigmar"
+            android:gravity="center"
             android:maxLines="2"
             android:text="Descripción de la receta o imagen"
             android:textAppearance="?attr/textAppearanceBody1"
