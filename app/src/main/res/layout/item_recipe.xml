@@ -1,6 +1,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -15,12 +16,12 @@
         <!-- Nombre de usuario encima de la imagen -->
         <TextView
             android:id="@+id/textViewUsername"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="266dp"
+            android:layout_height="33dp"
             android:text="Nombre de Usuario"
             android:textAppearance="?attr/textAppearanceSubtitle1"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Imagen de la card -->
