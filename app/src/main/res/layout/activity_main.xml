@@ -4,8 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#A29E9E"
-    android:padding="16dp"
+    android:padding="0dp"
     tools:context=".MainActivity">
 
     <!-- Search minimalista con fondo redondeado -->
@@ -13,6 +12,7 @@
         android:id="@+id/searchView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:padding="16dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/rounded_bg"
         android:queryHint="Buscar..."
@@ -41,15 +41,14 @@
     </androidx.core.widget.NestedScrollView>
 
     <!-- Navegación inferior minimalista -->
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#A29E9E"
-        android:elevation="4dp"
+        android:background="?android:attr/windowBackground"
+        app:menu="@menu/bottom_nav_menu"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
-
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

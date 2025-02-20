@@ -19,7 +19,7 @@ import java.util.List;
  * Adapter class for displaying a list of Carta objects in a RecyclerView.
  */
 public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHolder> {
-
+    private TextView tvUsername;
     private List<Carta> cartas;
 
     /**
@@ -78,8 +78,10 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
      * Holds the views for each item in the RecyclerView.
      */
     public static class CartaViewHolder extends RecyclerView.ViewHolder {
+        TextView tvUsername;
         TextView textoDescripcion;
         ImageView imagen;
+
 
         /**
          * Constructor for CartaViewHolder.
@@ -91,5 +93,7 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
             textoDescripcion = itemView.findViewById(R.id.textViewDescription);
             imagen = itemView.findViewById(R.id.imageView);
         }
+
     }
+
 }
