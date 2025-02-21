@@ -169,7 +169,9 @@ public class UserProfileActivity extends AppCompatActivity {
         rvUserImages = findViewById(R.id.rvUserImages);
         rvUserImages.setLayoutManager(new LinearLayoutManager(this));
         userCartasList = new ArrayList<>();
+        userCartaAdapter = new CartaAdapter(userCartasList);
         rvUserImages.setAdapter(userCartaAdapter);
+        cargarCartasDelUsuario();
 
         // Configurar Bottom Navigation
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -299,6 +301,37 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
 
+    // Carga las cartas (imágenes) del usuario desde Firestore
+    private void cargarCartasDelUsuario() {
+        if (mAuth.getCurrentUser() != null) {
+            String userId = mAuth.getCurrentUser().getUid();
+            db.collection("imagenes")
+                    .whereEqualTo("userId", userId)
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        userCartasList.clear();
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            UploadPhotoActivity.Imagen imagen =
+                                    document.toObject(UploadPhotoActivity.Imagen.class);
+                            Carta carta = new Carta(
+                                    "Receta " + document.getId(),
+                                    imagen.getDescripcion(),
+                                    0,
+                                    false,
+                                    false,
+                                    imagen.getUrl()
+                                    , "FirebaseUser"
 
+                            );
+                            userCartasList.add(carta);
+                        }
+                        userCartaAdapter.notifyDataSetChanged();
+                    })
+                    .addOnFailureListener(e ->
+                            Toast.makeText(this, "Error loading user cards", Toast.LENGTH_SHORT).show()
+                    );
+        }
+
+    }
 
 }
