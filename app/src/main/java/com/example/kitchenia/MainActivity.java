@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
         // Setup RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         cartasList = new ArrayList<>();
-        cartaAdapter = new CartaAdapter(cartasList);
-        recyclerView.setAdapter(cartaAdapter);
 
         // Setup search functionality
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -103,27 +101,32 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Loads all Carta objects from Firestore and updates the RecyclerView.
      */
+
     private void cargarTodasLasCartas() {
         db.collection("imagenes")
-            .get()
-            .addOnSuccessListener(queryDocumentSnapshots -> {
-                cartasList.clear();
-                for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                    UploadPhotoActivity.Imagen imagen = document.toObject(UploadPhotoActivity.Imagen.class);
-                    Carta carta = new Carta(
-                        "Receta " + document.getId(),
-                        imagen.getDescripcion(),
-                        0,
-                        false,
-                        false,
-                        imagen.getUrl() // Pass the URL from Firestore
-                    );
-                    cartasList.add(carta);
-                }
-                cartaAdapter.notifyDataSetChanged();
-            })
-            .addOnFailureListener(e -> Log.e("MainActivity", "Error al cargar cartas", e));
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    cartasList.clear();
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        UploadPhotoActivity.Imagen imagen = document.toObject(UploadPhotoActivity.Imagen.class);
+                        Carta carta = new Carta(
+                                "Receta " + document.getId(),
+                                imagen.getDescripcion(),
+                                0,
+                                false,
+                                false,
+                                imagen.getUrl()
+                        );
+                        cartasList.add(carta);
+                    }
+                    // Verifica que el adaptador no sea null antes de notificar cambios
+                    if (cartaAdapter != null) {
+                        cartaAdapter.notifyDataSetChanged();
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("MainActivity", "Error al cargar cartas", e));
     }
+
 
     /**
      * Searches for Carta objects in Firestore based on the query and updates the RecyclerView.
