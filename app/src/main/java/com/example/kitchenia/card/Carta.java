@@ -1,38 +1,68 @@
 package com.example.kitchenia.card;
 
-import lombok.Data;
-
-@Data
 public class Carta {
+    private String username;
     private String descripcion;
-    private String imagen;
-    private int meGusta;
-    private boolean noMeGusta;
-    private boolean url;
-    private String userId;
+    private int imageUrl; // Si es un recurso drawable, usa int. Si es una URL, usa String.
+    private boolean liked;
+    private boolean shared;
+    private String imageLink;
 
-
-    public Carta(String descripcion, String imagen, int meGusta, boolean noMeGusta, boolean url, String userId){
-
+    public Carta(String username, String descripcion, int imageUrl, boolean liked, boolean shared, String imageLink) {
+        this.username = username;
         this.descripcion = descripcion;
-        this.imagen = imagen;
-        this.meGusta = meGusta;
-        this.noMeGusta = noMeGusta;
-        this.url = url;
-        this.userId = userId; // <-- Inicializarlo en el constructor
+        this.imageUrl = imageUrl;
+        this.liked = liked;
+        this.shared = shared;
+        this.imageLink = imageLink;
     }
 
-    public String getUserId() {
-        return userId;
+    // Getters y Setters
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
-    public void setUrl(boolean url) {
-        this.url = url;
+
+    public String getDescripcion() {
+        return descripcion;
     }
-    public boolean getUrl() {
-        return url;
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public int getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(int imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
+    }
+
+    public boolean isShared() {
+        return shared;
+    }
+
+    public void setShared(boolean shared) {
+        this.shared = shared;
+    }
+
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
     }
 }

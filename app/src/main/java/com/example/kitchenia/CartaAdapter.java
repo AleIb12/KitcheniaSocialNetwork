@@ -10,41 +10,57 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.kitchenia.R;
 import com.example.kitchenia.card.Carta;
 
 import java.util.List;
 
-/**
- * Adapter class for displaying a list of Carta objects in a RecyclerView.
- */
-public class CartaAdapter extends RecyclerView.Adapter {
-    private TextView tvUsername;
-    private List<Carta> cartas;
+public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHolder> {
 
-    /**
-     * Constructor for CartaAdapter.
-     *
-     * @param cartas List of Carta objects to be displayed.
-     */
-    public CartaAdapter(List<Carta> cartas) {
-        this.cartas = cartas;
+    private List<Carta> cartaList;
+
+    public CartaAdapter(List<Carta> cartaList) {
+        this.cartaList = cartaList;
     }
 
+    public void updateData(List<Carta> newList) {
+        this.cartaList = newList;
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+    public CartaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipe, parent, false);
+        return new CartaViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull CartaViewHolder holder, int position) {
+        Carta carta = cartaList.get(position);
+        holder.bind(carta);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return cartaList.size();
+    }
+
+    public static class CartaViewHolder extends RecyclerView.ViewHolder {
+        private TextView textUsername;
+        private TextView textDescripcion;
+        private ImageView imageCarta;
+
+        public CartaViewHolder(@NonNull View itemView) {
+            super(itemView);
+            textUsername = itemView.findViewById(R.id.textUsername);
+            textDescripcion = itemView.findViewById(R.id.textDescripcion);
+            imageCarta = itemView.findViewById(R.id.imageCarta);
+        }
+
+        public void bind(Carta carta) {
+            textUsername.setText(carta.getUsername());
+            textDescripcion.setText(carta.getDescripcion());
+            Glide.with(itemView.getContext()).load(carta.getImageUrl()).into(imageCarta);
+        }
     }
 }
