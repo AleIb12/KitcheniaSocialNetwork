@@ -61,10 +61,11 @@
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="INICIAR SESIÓN"
+        android:layout_marginBottom="10dp"
         android:backgroundTint="#1E88E5"
-        android:textColor="#FFFFFF"
-        android:layout_marginBottom="10dp"/>
+        android:fontFamily="@font/sigmar"
+        android:text="INICIAR SESIÓN"
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -85,18 +86,20 @@
             android:id="@+id/googleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="GOOGLE"
+            android:layout_marginEnd="10dp"
             android:backgroundTint="#DB4437"
-            android:textColor="#FFFFFF"
-            android:layout_marginEnd="10dp"/>
+            android:fontFamily="@font/sigmar"
+            android:text="GOOGLE"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/facebookButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FACEBOOK"
             android:backgroundTint="#1877F2"
-            android:textColor="#FFFFFF"/>
+            android:fontFamily="@font/sigmar"
+            android:text="FACEBOOK"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <TextView

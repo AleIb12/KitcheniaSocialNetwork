@@ -1,6 +1,7 @@
 package com.example.kitchenia;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
@@ -23,9 +24,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-
-
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,6 +62,11 @@ public class UserProfileActivity extends AppCompatActivity {
     // Guardar la descripción original para comparar cambios
     private String originalDescription;
 
+    // Additional variables
+    private ProgressDialog progressDialog;
+    private Uri imageUri;
+    private EditText editTextDescripcion;
+    private FirebaseFirestore firestore;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -246,7 +249,7 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK &&
                 data != null && data.getData() != null) {
-            Uri imageUri = data.getData();
+            imageUri = data.getData();
             ivProfileImage.setImageURI(imageUri);
             subirImagenAFirebase(imageUri);
         }
@@ -254,17 +257,38 @@ public class UserProfileActivity extends AppCompatActivity {
 
     // Sube la imagen seleccionada a Firebase Storage
     private void subirImagenAFirebase(Uri imageUri) {
-        if (mAuth.getCurrentUser() == null) return;
-        String userId = mAuth.getCurrentUser().getUid();
-        StorageReference fileRef = storageRef.child(userId + ".jpg");
-        fileRef.putFile(imageUri).addOnSuccessListener(taskSnapshot ->
-                fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                    preferences.edit().putString("USER_IMAGE_URL", uri.toString()).apply();
-                    Toast.makeText(this, "Imagen subida", Toast.LENGTH_SHORT).show();
-                })
-        ).addOnFailureListener(e ->
-                Toast.makeText(this, "Error al subir imagen: " + e.getMessage(), Toast.LENGTH_SHORT).show()
-        );
+        progressDialog.show();
+
+        StorageReference ref = storage.getReference().child("imagenes/" + System.currentTimeMillis() + ".jpg");
+        ref.putFile(imageUri)
+            .addOnSuccessListener(taskSnapshot ->
+                ref.getDownloadUrl()
+                    .addOnSuccessListener(uri -> {
+                        String descripcion = editTextDescripcion.getText().toString();
+                        String currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+                        Imagen imagen = new Imagen(descripcion, uri.toString());
+                        imagen.setPublicador(currentUserEmail);
+
+                        firestore.collection("imagenes")
+                            .add(imagen)
+                            .addOnSuccessListener(documentReference -> {
+                                progressDialog.dismiss();
+                                Toast.makeText(UserProfileActivity.this, "Imagen subida exitosamente", Toast.LENGTH_SHORT).show();
+                            })
+                            .addOnFailureListener(e -> {
+                                progressDialog.dismiss();
+                                Toast.makeText(UserProfileActivity.this, "Error al guardar datos en Firestore", Toast.LENGTH_SHORT).show();
+                            });
+                    })
+                    .addOnFailureListener(e -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(UserProfileActivity.this, "Error al obtener URL de descarga", Toast.LENGTH_SHORT).show();
+                    }))
+            .addOnFailureListener(e -> {
+                progressDialog.dismiss();
+                Toast.makeText(UserProfileActivity.this, "Error al subir imagen", Toast.LENGTH_SHORT).show();
+            });
     }
 
     // Carga la imagen de perfil almacenada (si existe)
@@ -278,7 +302,6 @@ public class UserProfileActivity extends AppCompatActivity {
             );
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -300,38 +323,57 @@ public class UserProfileActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     // Carga las cartas (imágenes) del usuario desde Firestore
     private void cargarCartasDelUsuario() {
         if (mAuth.getCurrentUser() != null) {
-            String userId = mAuth.getCurrentUser().getUid();
+            String currentUserEmail = mAuth.getCurrentUser().getEmail();
             db.collection("imagenes")
-                    .whereEqualTo("userId", userId)
-                    .get()
-                    .addOnSuccessListener(queryDocumentSnapshots -> {
-                        userCartasList.clear();
-                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            UploadPhotoActivity.Imagen imagen =
-                                    document.toObject(UploadPhotoActivity.Imagen.class);
-                            Carta carta = new Carta(
-                                    "Receta " + document.getId(),
-                                    imagen.getDescripcion(),
-                                    0,
-                                    false,
-                                    false,
-                                    imagen.getUrl()
-                                    , "FirebaseUser"
-
-                            );
-                            userCartasList.add(carta);
-                        }
-                        userCartaAdapter.notifyDataSetChanged();
-                    })
-                    .addOnFailureListener(e ->
-                            Toast.makeText(this, "Error loading user cards", Toast.LENGTH_SHORT).show()
-                    );
+                .whereEqualTo("publicador", currentUserEmail)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    userCartasList.clear();
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        UploadPhotoActivity.Imagen imagen =
+                                document.toObject(UploadPhotoActivity.Imagen.class);
+                        Carta carta = new Carta(
+                                "Receta " + document.getId(),
+                                imagen.getDescripcion(),
+                                0,
+                                false,
+                                false,
+                                imagen.getUrl(),
+                                currentUserEmail
+                        );
+                        userCartasList.add(carta);
+                    }
+                    userCartaAdapter.notifyDataSetChanged();
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Error loading user cards", Toast.LENGTH_SHORT).show()
+                );
         }
-
     }
 
+    public static class Imagen {
+        private String descripcion;
+        private String url;
+        private String publicador;
+
+        public Imagen() {}
+
+        public Imagen(String descripcion, String url) {
+            this.descripcion = descripcion;
+            this.url = url;
+        }
+
+        public String getDescripcion() { return descripcion; }
+
+        public String getUrl() { return url; }
+
+        public String getPublicador() { return publicador; }
+
+        public void setPublicador(String publicador) {
+            this.publicador = publicador;
+        }
+    }
 }
