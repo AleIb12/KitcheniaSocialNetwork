@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         // Load initial data
         cargarTodasLasCartas();
 
-        // Setup bottom navigation
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.nav_home) {

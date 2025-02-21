@@ -21,15 +21,16 @@
             android:layout_gravity="center"
             android:src="@drawable/logo" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bienvenidos a KitchenIA"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:padding="16dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/sigmar"
+        android:padding="16dp"
+        android:text="Bienvenidos a KitchenIA"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/etCorreo"
@@ -75,14 +76,15 @@
         android:textColor="#736F6F"
         android:textColorHint="#AAAAAA" />
 
-        <Button
-            android:id="@+id/btnCrearCuenta"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CREAR CUENTA"
-            android:backgroundTint="#6366F1"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="10dp" />
+    <Button
+        android:id="@+id/btnCrearCuenta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#6366F1"
+        android:fontFamily="@font/sigmar"
+        android:text="CREAR CUENTA"
+        android:textColor="#FFFFFF" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -101,18 +103,20 @@
                 android:id="@+id/googleButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="GOOGLE"
+                android:layout_marginEnd="10dp"
                 android:backgroundTint="#DB4437"
-                android:textColor="#FFFFFF"
-                android:layout_marginEnd="10dp"/>
+                android:fontFamily="@font/sigmar"
+                android:text="GOOGLE"
+                android:textColor="#FFFFFF" />
 
             <Button
                 android:id="@+id/facebookButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FACEBOOK"
                 android:backgroundTint="#1877F2"
-                android:textColor="#FFFFFF"/>
+                android:fontFamily="@font/sigmar"
+                android:text="FACEBOOK"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <TextView
