@@ -9,9 +9,9 @@
     app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="393dp"
-        android:layout_height="match_parent"
-        android:background="#A29E9E"
+        android:layout_width="match_parent"
+        android:layout_height="510dp"
+        android:background="@color/white"
         android:padding="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
