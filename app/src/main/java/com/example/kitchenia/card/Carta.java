@@ -1,40 +1,29 @@
 package com.example.kitchenia.card;
 
-import lombok.Data;
-
-@Data
 public class Carta {
-    private String nombre;
+    private String username;
     private String descripcion;
-    private int imagen;
-    private boolean meGusta;
-    private boolean noMeGusta;
-    private String url; // Add this field
+    private int imageUrl; // Si es un recurso drawable, usa int. Si es una URL, usa String.
+    private boolean liked;
+    private boolean shared;
+    private String imageLink;
 
-    public Carta(String nombre, String descripcion, int imagen, boolean meGusta, boolean noMeGusta, String url) {
-        this.nombre = nombre;
+    public Carta(String username, String descripcion, int imageUrl, boolean liked, boolean shared, String imageLink) {
+        this.username = username;
         this.descripcion = descripcion;
-        this.imagen = imagen;
-        this.meGusta = meGusta;
-        this.noMeGusta = noMeGusta;
-        this.url = url;
+        this.imageUrl = imageUrl;
+        this.liked = liked;
+        this.shared = shared;
+        this.imageLink = imageLink;
     }
 
-    // Add getter and setter for url
-    public String getUrl() {
-        return url;
+    // Getters y Setters
+    public String getUsername() {
+        return username;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getDescripcion() {
@@ -45,27 +34,35 @@ public class Carta {
         this.descripcion = descripcion;
     }
 
-    public int getImagen() {
-        return imagen;
+    public int getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImagen(int imagen) {
-        this.imagen = imagen;
+    public void setImageUrl(int imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public boolean isMeGusta() {
-        return meGusta;
+    public boolean isLiked() {
+        return liked;
     }
 
-    public void setMeGusta(boolean meGusta) {
-        this.meGusta = meGusta;
+    public void setLiked(boolean liked) {
+        this.liked = liked;
     }
 
-    public boolean isNoMeGusta() {
-        return noMeGusta;
+    public boolean isShared() {
+        return shared;
     }
 
-    public void setNoMeGusta(boolean noMeGusta) {
-        this.noMeGusta = noMeGusta;
+    public void setShared(boolean shared) {
+        this.shared = shared;
+    }
+
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
     }
 }
