@@ -19,6 +19,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+/**
+ * Activity para subir fotos a Firebase Storage y guardar la información en Firestore.
+ */
 public class UploadPhotoActivity extends AppCompatActivity {
 
     private ImageView imageViewPreview;
@@ -29,6 +32,14 @@ public class UploadPhotoActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> imagePickerLauncher;
     private ProgressDialog progressDialog;
 
+    /**
+     * Llamado cuando la actividad es creada por primera vez.
+     * Inicializa los elementos de la interfaz de usuario y las instancias de Firebase.
+     *
+     * @param savedInstanceState Si la actividad está siendo re-inicializada después de
+     * haber sido previamente cerrada, este Bundle contiene los datos más recientes
+     * suministrados en onSaveInstanceState(Bundle). Nota: De lo contrario, es null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +103,9 @@ public class UploadPhotoActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Sube la imagen seleccionada a Firebase Storage y guarda la información en Firestore.
+     */
     private void subirImagenAFirebase() {
         progressDialog.show(); // Muestra el ProgressDialog antes de iniciar la subida
 
@@ -125,7 +139,9 @@ public class UploadPhotoActivity extends AppCompatActivity {
                 });
     }
 
-    // Clase modelo para la imagen
+    /**
+     * Clase modelo para la imagen.
+     */
     public static class Imagen {
         private String descripcion;
         private String url;
@@ -146,7 +162,6 @@ public class UploadPhotoActivity extends AppCompatActivity {
         public String getUrl() {
             return url;
         }
-
 
         public String getPublicador() {
             return publicador;

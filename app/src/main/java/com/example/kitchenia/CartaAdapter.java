@@ -14,19 +14,41 @@ import com.bumptech.glide.Glide;
 import com.example.kitchenia.card.Carta;
 import java.util.List;
 
+/**
+ * Adaptador para mostrar una lista de objetos Carta en un RecyclerView.
+ */
 public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHolder> {
 
     private List<Carta> cartas;
     private OnItemDeleteListener deleteListener;
 
+    /**
+     * Constructor para inicializar el adaptador con una lista de cartas.
+     *
+     * @param cartas La lista de cartas a mostrar.
+     */
     public CartaAdapter(List<Carta> cartas) {
         this.cartas = cartas;
     }
 
+    /**
+     * Interfaz para manejar la eliminación de un elemento.
+     */
     public interface OnItemDeleteListener {
+        /**
+         * Método llamado cuando se elimina una carta.
+         *
+         * @param carta    La carta eliminada.
+         * @param position La posición de la carta eliminada.
+         */
         void onDelete(Carta carta, int position);
     }
 
+    /**
+     * Establece el listener para la eliminación de elementos.
+     *
+     * @param listener El listener a establecer.
+     */
     public void setOnItemDeleteListener(OnItemDeleteListener listener) {
         this.deleteListener = listener;
     }
@@ -76,6 +98,9 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
         return cartas.size();
     }
 
+    /**
+     * ViewHolder para los elementos de la lista de cartas.
+     */
     static class CartaViewHolder extends RecyclerView.ViewHolder {
         TextView textViewUsername;
         TextView textViewDescription;
@@ -83,6 +108,11 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
         ImageButton buttonLike;
         ImageButton buttonOptions;
 
+        /**
+         * Constructor para inicializar las vistas del ViewHolder.
+         *
+         * @param itemView La vista del elemento.
+         */
         CartaViewHolder(View itemView) {
             super(itemView);
             textViewUsername = itemView.findViewById(R.id.textViewUsername);

@@ -40,6 +40,10 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Activity para mostrar y editar el perfil del usuario.
+ * Permite cambiar la imagen de perfil, editar la descripción y ver las publicaciones del usuario.
+ */
 public class UserProfileActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private ImageView ivProfileImage;
@@ -68,6 +72,14 @@ public class UserProfileActivity extends AppCompatActivity {
     private EditText editTextDescripcion;
     private FirebaseFirestore firestore;
 
+    /**
+     * Llamado cuando la actividad es creada por primera vez.
+     * Inicializa los elementos de la interfaz de usuario y las instancias de Firebase.
+     *
+     * @param savedInstanceState Si la actividad está siendo re-inicializada después de
+     * haber sido previamente cerrada, este Bundle contiene los datos más recientes
+     * suministrados en onSaveInstanceState(Bundle). Nota: De lo contrario, es null.
+     */
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,7 +211,10 @@ public class UserProfileActivity extends AppCompatActivity {
         ivProfileImage.setOnClickListener(v -> openFileChooser());
     }
 
-    // Método para guardar la descripción actualizada
+    /**
+     * Guarda la descripción actualizada del usuario.
+     * Desactiva la edición y oculta el teclado.
+     */
     private void saveDescription() {
         String newDescription = etDescription.getText().toString().trim();
         if (!newDescription.equals(originalDescription)) {
@@ -216,7 +231,10 @@ public class UserProfileActivity extends AppCompatActivity {
         }
     }
 
-    // Maneja la acción de seguir/dejar de seguir
+    /**
+     * Maneja la acción de seguir o dejar de seguir a un usuario.
+     * Actualiza el contador de seguidores y el estado de seguimiento.
+     */
     private void toggleFollow() {
         if (isFollowing && followersCount > 0) {
             followersCount--;
@@ -233,17 +251,29 @@ public class UserProfileActivity extends AppCompatActivity {
         actualizarBotonSeguir();
     }
 
+    /**
+     * Actualiza el texto del botón de seguir según el estado de seguimiento.
+     */
     private void actualizarBotonSeguir() {
         btnFollow.setText(isFollowing ? "Dejar de seguir" : "Seguir");
     }
 
-    // Abre el selector de imágenes para cambiar la imagen de perfil
+    /**
+     * Abre el selector de archivos para cambiar la imagen de perfil.
+     */
     private void openFileChooser() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
+    /**
+     * Maneja el resultado de la actividad de selección de imagen.
+     *
+     * @param requestCode El código de solicitud pasado a startActivityForResult().
+     * @param resultCode El código de resultado devuelto por la actividad hija.
+     * @param data Un Intent que lleva los datos del resultado.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -255,7 +285,11 @@ public class UserProfileActivity extends AppCompatActivity {
         }
     }
 
-    // Sube la imagen seleccionada a Firebase Storage
+    /**
+     * Sube la imagen seleccionada a Firebase Storage.
+     *
+     * @param imageUri La URI de la imagen seleccionada.
+     */
     private void subirImagenAFirebase(Uri imageUri) {
         progressDialog.show();
 
@@ -291,7 +325,9 @@ public class UserProfileActivity extends AppCompatActivity {
             });
     }
 
-    // Carga la imagen de perfil almacenada (si existe)
+    /**
+     * Carga la imagen de perfil almacenada (si existe).
+     */
     private void cargarImagenPerfil() {
         String imageUrl = preferences.getString("USER_IMAGE_URL", null);
         if (imageUrl != null) {
@@ -303,6 +339,12 @@ public class UserProfileActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Crea el menú de opciones en la barra de herramientas.
+     *
+     * @param menu El menú de opciones en el que se inflará el menú.
+     * @return true si el menú se creó con éxito.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -310,6 +352,12 @@ public class UserProfileActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Maneja las selecciones de elementos del menú de opciones.
+     *
+     * @param item El elemento del menú seleccionado.
+     * @return true si la selección se manejó con éxito.
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_logout) {
@@ -323,7 +371,9 @@ public class UserProfileActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // Carga las cartas (imágenes) del usuario desde Firestore
+    /**
+     * Carga las cartas (imágenes) del usuario desde Firestore.
+     */
     private void cargarCartasDelUsuario() {
         if (mAuth.getCurrentUser() != null) {
             String currentUserEmail = mAuth.getCurrentUser().getEmail();
@@ -354,6 +404,9 @@ public class UserProfileActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Clase modelo para la imagen.
+     */
     public static class Imagen {
         private String descripcion;
         private String url;

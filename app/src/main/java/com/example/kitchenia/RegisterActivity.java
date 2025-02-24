@@ -15,30 +15,35 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
- * Activity for user registration.
- * Allows users to create a new account with email and password.
+ * Activity para el registro de usuarios.
+ * Permite a los usuarios crear una nueva cuenta con correo electrónico y contraseña.
  */
 public class RegisterActivity extends AppCompatActivity {
 
-    // UI elements
+    // Elementos de la interfaz de usuario
     private EditText etCorreo, etNombre, etPassword, etPasswordConfirm;
     private Button btnCrearCuenta, googleButton;
     private TextView loginText;  // Agregado para el botón de navegación
 
-    // Firebase instances
+    // Instancias de Firebase
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private static final int RC_SIGN_IN = 100;
 
     /**
-     * Called when the activity is first created.
+     * Llamado cuando la actividad es creada por primera vez.
+     * Inicializa los elementos de la interfaz de usuario y las instancias de Firebase.
+     *
+     * @param savedInstanceState Si la actividad está siendo re-inicializada después de
+     * haber sido previamente cerrada, este Bundle contiene los datos más recientes
+     * suministrados en onSaveInstanceState(Bundle). Nota: De lo contrario, es null.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        // Initialize UI elements
+        // Inicializar elementos de la interfaz de usuario
         etCorreo = findViewById(R.id.etCorreo);
         etNombre = findViewById(R.id.etNombre);
         etPassword = findViewById(R.id.etPassword);
@@ -46,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnCrearCuenta = findViewById(R.id.btnCrearCuenta);
         loginText = findViewById(R.id.loginText); // Inicialización del nuevo botón
 
-        // Initialize Firebase instances
+        // Inicializar instancias de Firebase
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
@@ -55,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class))
         );
 
-        // Set up the button click listener for account creation
+        // Configurar el listener del botón para la creación de cuenta
         btnCrearCuenta.setOnClickListener(v -> {
             String correo = etCorreo.getText().toString().trim();
             String nombre = etNombre.getText().toString().trim();
@@ -71,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         .set(new User(nombre))
                                         .addOnSuccessListener(aVoid ->
                                                 Toast.makeText(RegisterActivity.this,
-                                                        "Registration successful", Toast.LENGTH_SHORT).show()
+                                                        "Registro exitoso", Toast.LENGTH_SHORT).show()
                                         );
                                 startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                                 finish();
@@ -83,14 +88,14 @@ public class RegisterActivity extends AppCompatActivity {
                         });
             } else {
                 Toast.makeText(RegisterActivity.this,
-                        "All fields are required and passwords must match",
+                        "Todos los campos son obligatorios y las contraseñas deben coincidir",
                         Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     /**
-     * Simple POJO class to store user information in Firestore.
+     * Clase POJO simple para almacenar información del usuario en Firestore.
      */
     public static class User {
         private String username;
