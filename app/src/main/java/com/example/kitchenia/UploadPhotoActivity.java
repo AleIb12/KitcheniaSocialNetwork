@@ -129,12 +129,14 @@ public class UploadPhotoActivity extends AppCompatActivity {
     public static class Imagen {
         private String descripcion;
         private String url;
+        private String publicador;  // campo agregado
 
         public Imagen() {}
 
         public Imagen(String descripcion, String url) {
             this.descripcion = descripcion;
             this.url = url;
+
         }
 
         public String getDescripcion() {
@@ -143,6 +145,11 @@ public class UploadPhotoActivity extends AppCompatActivity {
 
         public String getUrl() {
             return url;
+        }
+
+
+        public String getPublicador() {
+            return publicador;
         }
     }
 }

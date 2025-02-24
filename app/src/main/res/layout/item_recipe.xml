@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -21,9 +22,19 @@
         app:layout_constraintVertical_bias="0.5"
         tools:layout_editor_absoluteX="1dp">
 
-        <!-- Nombre de usuario encima de la imagen -->
+        <!-- Botón con tres puntitos en la esquina superior izquierda -->
+        <ImageButton
+            android:id="@+id/buttonOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Opciones"
+            android:src="@drawable/ic_more_vert"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Imagen de la card -->
+        <!-- Nombre de usuario encima de la imagen -->
         <TextView
             android:id="@+id/textViewUsername"
             android:layout_width="309dp"
@@ -76,6 +87,7 @@
             android:layout_marginTop="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:backgroundTint="#D1D1D1"
+            android:src="@drawable/thumb_up_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />

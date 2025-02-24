@@ -11,7 +11,7 @@ public class Carta {
     private boolean noMeGusta;
     private String url; // Add this field
     private String publicador;
-    public Carta(String nombre, String descripcion, int imagen, boolean meGusta, boolean noMeGusta, String url) {
+    public Carta(String nombre, String descripcion, int imagen, boolean meGusta, boolean noMeGusta, String url, String publicador) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.imagen = imagen;
