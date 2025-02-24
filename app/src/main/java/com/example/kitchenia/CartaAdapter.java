@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.kitchenia.card.Carta;
+import com.example.kitchenia.R;
 
 import java.util.List;
 
@@ -60,7 +61,17 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
         public void bind(Carta carta) {
             textUsername.setText(carta.getUsername());
             textDescripcion.setText(carta.getDescripcion());
-            Glide.with(itemView.getContext()).load(carta.getImageUrl()).into(imageCarta);
+
+            // Cargar imagen: si `imageLink` no está vacío, usa Glide; si no, usa el recurso local.
+            if (carta.getImageLink() != null && !carta.getImageLink().isEmpty()) {
+                Glide.with(itemView.getContext())
+                        .load(carta.getImageLink())  // Carga desde URL Firebase Storage
+                        .placeholder(R.drawable.placeholder_image) // Imagen mientras carga
+                        .error(R.drawable.error_image) // Imagen en caso de error
+                        .into(imageCarta);
+            } else {
+                imageCarta.setImageResource(carta.getImageUrl()); // Carga desde drawable
+            }
         }
     }
 }

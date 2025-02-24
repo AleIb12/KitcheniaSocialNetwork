@@ -24,17 +24,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private CartaAdapter cartaAdapter;
-    private List<Carta> cartasList;
+    private List<Carta> cartaList;
     private FirebaseFirestore db;
 
-    /**
-     * Called when the activity is first created.
-     * Initializes the UI elements and sets up Firebase.
-     *
-     * @param savedInstanceState If the activity is being re-initialized after
-     * previously being shut down then this Bundle contains the data it most
-     * recently supplied in onSaveInstanceState(Bundle). Note: Otherwise it is null.
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +42,22 @@ public class MainActivity extends AppCompatActivity {
 
         // Setup RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        cartasList = new ArrayList<>();
+        cartaList = new ArrayList<>();
+        cartaAdapter = new CartaAdapter(cartaList);
+        recyclerView.setAdapter(cartaAdapter);
+
+        // Setup bottom navigation
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.nav_upload) {
+                startActivity(new Intent(MainActivity.this, UploadPhotoActivity.class));
+                return true;
+            } else if (item.getItemId() == R.id.nav_profile) {
+                startActivity(new Intent(MainActivity.this, UserProfileActivity.class));
+                return true;
+            }
+            return false;
+        });
 
         // Setup search functionality
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -71,89 +78,49 @@ public class MainActivity extends AppCompatActivity {
 
         // Load initial data
         cargarTodasLasCartas();
-
-        bottomNavigationView.setSelectedItemId(R.id.nav_home);
-        bottomNavigationView.setOnItemSelectedListener(item -> {
-            int itemId = item.getItemId();
-            if (itemId == R.id.nav_home) {
-                return true;
-            } else if (itemId == R.id.nav_upload) {
-                startActivity(new Intent(MainActivity.this, UploadPhotoActivity.class));
-                return true;
-            } else if (itemId == R.id.nav_profile) {
-                startActivity(new Intent(MainActivity.this, UserProfileActivity.class));
-                return true;
-            }
-            return false;
-        });
     }
-
-    /**
-     * Called when the activity is resumed.
-     * Reloads all Carta objects.
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-        cargarTodasLasCartas();
-    }
-
-    /**
-     * Loads all Carta objects from Firestore and updates the RecyclerView.
-     */
 
     private void cargarTodasLasCartas() {
+        db.collection("imagenes").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            cartaList.clear();
+            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                UploadPhotoActivity.Imagen imagen = document.toObject(UploadPhotoActivity.Imagen.class);
+                String imageUrl = (imagen.getUrl() != null) ? imagen.getUrl() : "URL_POR_DEFECTO";
+
+                Carta carta = new Carta(
+                        "Receta " + document.getId(),
+                        imagen.getDescripcion(),
+                        0, false, false,
+                        imageUrl
+                );
+                cartaList.add(carta);
+            }
+            cartaAdapter.notifyDataSetChanged();
+        }).addOnFailureListener(e -> Log.e("MainActivity", "Error al cargar cartas", e));
+    }
+
+    private void buscarCartas(String query) {
+        String queryLower = query.toLowerCase();
         db.collection("imagenes")
+                .whereGreaterThanOrEqualTo("descripcion", queryLower)
+                .whereLessThanOrEqualTo("descripcion", queryLower + "\uf8ff")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    cartasList.clear();
+                    cartaList.clear();
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                         UploadPhotoActivity.Imagen imagen = document.toObject(UploadPhotoActivity.Imagen.class);
+                        String imageUrl = (imagen.getUrl() != null) ? imagen.getUrl() : "URL_POR_DEFECTO";
+
                         Carta carta = new Carta(
                                 "Receta " + document.getId(),
                                 imagen.getDescripcion(),
-                                0,
-                                false,
-                                false,
-                                imagen.getUrl()
+                                0, false, false,
+                                imageUrl
                         );
-                        cartasList.add(carta);
+                        cartaList.add(carta);
                     }
-                    // Verifica que el adaptador no sea null antes de notificar cambios
-                    if (cartaAdapter != null) {
-                        cartaAdapter.notifyDataSetChanged();
-                    }
+                    cartaAdapter.notifyDataSetChanged();
                 })
-                .addOnFailureListener(e -> Log.e("MainActivity", "Error al cargar cartas", e));
-    }
-
-
-    /**
-     * Searches for Carta objects in Firestore based on the query and updates the RecyclerView.
-     *
-     * @param query The search query.
-     */
-    private void buscarCartas(String query) {
-        db.collection("imagenes")
-            .whereGreaterThanOrEqualTo("descripcion", query)
-            .whereLessThanOrEqualTo("descripcion", query + "\uf8ff")
-            .get()
-            .addOnSuccessListener(queryDocumentSnapshots -> {
-                cartasList.clear();
-                for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                    UploadPhotoActivity.Imagen imagen = document.toObject(UploadPhotoActivity.Imagen.class);
-                    Carta carta = new Carta(
-                        "Receta " + document.getId(),
-                        imagen.getDescripcion(),
-                        0,
-                        false,
-                        false,
-                        imagen.getUrl() // Pass the URL from Firestore
-                    );
-                    cartasList.add(carta);
-                }
-                cartaAdapter.notifyDataSetChanged();
-            })
-            .addOnFailureListener(e -> Log.e("MainActivity", "Error en la búsqueda", e));
+                .addOnFailureListener(e -> Log.e("MainActivity", "Error en la búsqueda", e));
     }
 }

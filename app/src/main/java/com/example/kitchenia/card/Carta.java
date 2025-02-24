@@ -5,7 +5,6 @@ public class Carta {
     private String descripcion;
     private int imageUrl; // Si es un recurso drawable, usa int. Si es una URL, usa String.
     private boolean liked;
-    private boolean shared;
     private String imageLink;
 
     public Carta(String username, String descripcion, int imageUrl, boolean liked, boolean shared, String imageLink) {
@@ -13,7 +12,6 @@ public class Carta {
         this.descripcion = descripcion;
         this.imageUrl = imageUrl;
         this.liked = liked;
-        this.shared = shared;
         this.imageLink = imageLink;
     }
 
@@ -48,14 +46,6 @@ public class Carta {
 
     public void setLiked(boolean liked) {
         this.liked = liked;
-    }
-
-    public boolean isShared() {
-        return shared;
-    }
-
-    public void setShared(boolean shared) {
-        this.shared = shared;
     }
 
     public String getImageLink() {
