@@ -86,38 +86,11 @@
         android:text="CREAR CUENTA"
         android:textColor="#FFFFFF" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Crear cuenta a partir de:"
-            android:textColor="#FFFFFF"
-            android:padding="10dp" />
-
-        <LinearLayout
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center">
-
-            <Button
-                android:id="@+id/googleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:backgroundTint="#DB4437"
-                android:fontFamily="@font/sigmar"
-                android:text="GOOGLE"
-                android:textColor="#FFFFFF" />
-
-            <Button
-                android:id="@+id/facebookButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#1877F2"
-                android:fontFamily="@font/sigmar"
-                android:text="FACEBOOK"
-                android:textColor="#FFFFFF" />
-        </LinearLayout>
+            android:gravity="center"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -127,7 +100,7 @@
             android:padding="10dp" />
 
         <TextView
-            android:id="@+id/tvIniciarSesion"
+            android:id="@+id/loginText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Iniciar sesión"

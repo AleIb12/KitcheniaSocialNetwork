@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // UI elements
     private EditText emailEditText, passwordEditText;
-    private Button loginButton, googleButton, facebookButton;
+    private Button loginButton, googleButton;
     private TextView forgotPasswordText, createAccountText;
     private ImageView logoImage;
 
@@ -62,7 +62,6 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
         googleButton = findViewById(R.id.googleButton);
-        facebookButton = findViewById(R.id.facebookButton);
         forgotPasswordText = findViewById(R.id.forgotPasswordText);
         createAccountText = findViewById(R.id.createAccountText);
 
@@ -102,11 +101,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // Set up Google Sign-In button click listener
         googleButton.setOnClickListener(v -> signInWithGoogle());
-
-        // Set up Facebook button click listener
-        facebookButton.setOnClickListener(v ->
-                Toast.makeText(this, "Facebook", Toast.LENGTH_SHORT).show()
-        );
 
         // Set up forgot password text click listener
         forgotPasswordText.setOnClickListener(v -> {
