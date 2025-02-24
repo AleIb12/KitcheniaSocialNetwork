@@ -1,77 +1,73 @@
 package com.example.kitchenia;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.kitchenia.card.Carta;
-import com.example.kitchenia.R;
-
 import java.util.List;
 
 public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHolder> {
+    private List<Carta> cartas;
 
-    private List<Carta> cartaList;
-
-    public CartaAdapter(List<Carta> cartaList) {
-        this.cartaList = cartaList;
-    }
-
-    public void updateData(List<Carta> newList) {
-        this.cartaList = newList;
-        notifyDataSetChanged();
+    public CartaAdapter(List<Carta> cartas) {
+        this.cartas = cartas;
     }
 
     @NonNull
     @Override
     public CartaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipe, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_recipe, parent, false);
         return new CartaViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CartaViewHolder holder, int position) {
-        Carta carta = cartaList.get(position);
-        holder.bind(carta);
+        Carta carta = cartas.get(position);
+
+        // Set publisher name
+        holder.textViewUsername.setText(carta.getPublicador());
+
+        // Set description
+        holder.textViewDescription.setText(carta.getDescripcion());
+
+        // Load image using Glide
+        if (carta.getUrl() != null && !carta.getUrl().isEmpty()) {
+            Glide.with(holder.imageView.getContext())
+                    .load(carta.getUrl())
+                    .centerCrop()
+                    .into(holder.imageView);
+        }
+
+        // Handle like button click
+        holder.buttonLike.setOnClickListener(v -> {
+            carta.setMeGusta(!carta.isMeGusta());
+            holder.buttonLike.setSelected(carta.isMeGusta());
+        });
     }
 
     @Override
     public int getItemCount() {
-        return cartaList.size();
+        return cartas.size();
     }
 
-    public static class CartaViewHolder extends RecyclerView.ViewHolder {
-        private TextView textUsername;
-        private TextView textDescripcion;
-        private ImageView imageCarta;
+    static class CartaViewHolder extends RecyclerView.ViewHolder {
+        TextView textViewUsername;
+        TextView textViewDescription;
+        ImageView imageView;
+        ImageButton buttonLike;
 
-        public CartaViewHolder(@NonNull View itemView) {
+        CartaViewHolder(View itemView) {
             super(itemView);
-            textUsername = itemView.findViewById(R.id.textUsername);
-            textDescripcion = itemView.findViewById(R.id.textDescripcion);
-            imageCarta = itemView.findViewById(R.id.imageCarta);
-        }
-
-        public void bind(Carta carta) {
-            textUsername.setText(carta.getUsername());
-            textDescripcion.setText(carta.getDescripcion());
-
-            // Cargar imagen: si `imageLink` no está vacío, usa Glide; si no, usa el recurso local.
-            if (carta.getImageLink() != null && !carta.getImageLink().isEmpty()) {
-                Glide.with(itemView.getContext())
-                        .load(carta.getImageLink())  // Carga desde URL Firebase Storage
-                        .placeholder(R.drawable.placeholder_image) // Imagen mientras carga
-                        .error(R.drawable.error_image) // Imagen en caso de error
-                        .into(imageCarta);
-            } else {
-                imageCarta.setImageResource(carta.getImageUrl()); // Carga desde drawable
-            }
+            textViewUsername = itemView.findViewById(R.id.textViewUsername);
+            textViewDescription = itemView.findViewById(R.id.textViewDescription);
+            imageView = itemView.findViewById(R.id.imageView);
+            buttonLike = itemView.findViewById(R.id.buttonLike);
         }
     }
 }
