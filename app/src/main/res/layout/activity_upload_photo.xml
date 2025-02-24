@@ -21,7 +21,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:padding="16dp"
             tools:context=".UploadPhotoActivity">
 
@@ -38,6 +37,8 @@
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/sigmar"
                 android:text="Seleccionar imagen"
+                android:textColor="#72b792"
+                android:textColorLink="#72b792"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +76,11 @@
                     android:fontFamily="@font/sigmar"
                     android:gravity="top|start"
                     android:inputType="textMultiLine"
-                    android:minLines="3" />
+                    android:minLines="3"
+                    android:textColor="#72b792"
+                    android:textColorHighlight="#72b792"
+                    android:textColorHint="#72b792"
+                    android:textColorLink="#72b792" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Botón para enviar la foto -->
@@ -86,8 +91,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
+                android:background="#72b792"
                 android:fontFamily="@font/sigmar"
                 android:text="Enviar foto"
+                android:textColorLink="#72b792"
+                app:backgroundTint="#72b792"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -102,6 +110,7 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="#c5f2da"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

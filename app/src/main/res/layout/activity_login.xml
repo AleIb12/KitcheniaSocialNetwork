@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#F2BAC9"
+    android:background="@drawable/ic_inicio"
     android:padding="20dp">
 
     <ImageView
@@ -62,7 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="INICIAR SESIÓN"
-        android:backgroundTint="#1E88E5"
+        android:backgroundTint="#DB4437"
         android:textColor="#FFFFFF"
         android:layout_marginBottom="10dp"/>
 
@@ -86,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="GOOGLE"
-            android:backgroundTint="#DB4437"
+            android:backgroundTint="#ff3131"
             android:textColor="#FFFFFF"
             android:layout_marginEnd="10dp"/>
 

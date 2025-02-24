@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F2BAC9"
+    android:background="@drawable/ic_register"
     android:orientation="vertical"
     android:gravity="center"
     android:padding="20dp">
@@ -81,7 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:backgroundTint="#6366F1"
+        android:backgroundTint="#cb6ce6"
         android:fontFamily="@font/sigmar"
         android:text="CREAR CUENTA"
         android:textColor="#FFFFFF" />
