@@ -1,4 +1,3 @@
-// MainActivity.java
 package com.example.kitchenia;
 
 import android.content.Intent;
@@ -25,8 +24,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * La actividad principal de la aplicación, que muestra una lista de cartas y permite
+ * realizar búsquedas y navegar entre diferentes secciones.
+ */
 public class MainActivity extends AppCompatActivity {
-private FirebaseStorage storage;
+    private FirebaseStorage storage;
     private CartaAdapter cartaAdapter;
     private List<Carta> cartasList;
     private FirebaseFirestore db;
@@ -34,6 +37,14 @@ private FirebaseStorage storage;
     private TheMealDbApi mealDbApi;
     private int apiResponses = 0;
 
+    /**
+     * Llamado cuando la actividad es creada por primera vez.
+     * Inicializa los componentes de la UI y las instancias de Firebase.
+     *
+     * @param savedInstanceState Si la actividad está siendo re-inicializada después de
+     * haber sido previamente cerrada, este Bundle contiene los datos más recientes
+     * suministrados en onSaveInstanceState(Bundle). Nota: De lo contrario, es null.
+     */
     @Override
     protected void onCreate(@NonNull Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,13 +122,19 @@ private FirebaseStorage storage;
         });
     }
 
+    /**
+     * Llamado cuando la actividad se reanuda.
+     * Carga todas las cartas desde Firestore.
+     */
     @Override
     protected void onResume() {
         super.onResume();
         cargarTodasLasCartas();
     }
 
-    // Carga tres imágenes aleatorias desde la API y las agrega a la lista
+    /**
+     * Carga tres imágenes aleatorias desde la API y las agrega a la lista.
+     */
     private void loadFirstThreeFromApi() {
         for (int i = 0; i < 3; i++) {
             mealDbApi.getRandomMeal().enqueue(new Callback<MealsResponse>() {
@@ -155,7 +172,9 @@ private FirebaseStorage storage;
         }
     }
 
-    // Carga las cartas de Firestore y combina con las imágenes de la API
+    /**
+     * Carga las cartas de Firestore y combina con las imágenes de la API.
+     */
     private void cargarTodasLasCartas() {
         // Conservar las cartas de API (con publicador "chef")
         List<Carta> apiCartas = new ArrayList<>();
@@ -177,7 +196,6 @@ private FirebaseStorage storage;
                                 false,
                                 false,
                                 imagen.getUrl(),
-                                //obtener el publicador de la imagen de firestorage
                                 imagen.getPublicador()
                         );
                         firestoreCartas.add(carta);
@@ -190,6 +208,11 @@ private FirebaseStorage storage;
                 .addOnFailureListener(e -> Log.e("MainActivity", "Error al cargar cartas", e));
     }
 
+    /**
+     * Busca cartas en Firestore que coincidan con la consulta dada.
+     *
+     * @param query La consulta de búsqueda.
+     */
     private void buscarCartas(String query) {
         db.collection("imagenes")
                 .whereGreaterThanOrEqualTo("descripcion", query)
@@ -223,13 +246,14 @@ private FirebaseStorage storage;
                 .addOnFailureListener(e -> Log.e("MainActivity", "Error en la búsqueda", e));
     }
 
-private synchronized void checkIfComplete() {
+    /**
+     * Verifica si se han completado todas las respuestas de la API.
+     * Si es así, carga todas las cartas.
+     */
+    private synchronized void checkIfComplete() {
         apiResponses++;
         if (apiResponses == 3) {
             runOnUiThread(this::cargarTodasLasCartas);
-
         }
     }
- // Al final de MainActivity.java se encuentra definida una clase Imagen:
-
 }

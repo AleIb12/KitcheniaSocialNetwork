@@ -23,40 +23,40 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import java.util.regex.Pattern;
 
 /**
- * Activity for user login.
+ * Activity para el inicio de sesión de usuarios.
  */
 public class LoginActivity extends AppCompatActivity {
 
-    // Regular expressions for email and password validation
+    // Expresiones regulares para la validación de correo y contraseña
     private static final Pattern EMAIL_REGEX = Patterns.EMAIL_ADDRESS;
     private static final Pattern PASSWORD_REGEX =
             Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z]).{6,}$");
     private static final int RC_SIGN_IN = 100;
 
-    // UI elements
+    // Elementos de la interfaz de usuario
     private EditText emailEditText, passwordEditText;
     private Button loginButton, googleButton;
     private TextView forgotPasswordText, createAccountText;
     private ImageView logoImage;
 
-    // Firebase and Google Sign-In instances
+    // Instancias de Firebase y Google Sign-In
     private FirebaseAuth mAuth;
     private GoogleSignInClient googleSignInClient;
 
     /**
-     * Called when the activity is first created.
-     * Initializes the UI elements and sets up Firebase and Google Sign-In.
+     * Llamado cuando la actividad es creada por primera vez.
+     * Inicializa los elementos de la interfaz de usuario y configura Firebase y Google Sign-In.
      *
-     * @param savedInstanceState If the activity is being re-initialized after
-     * previously being shut down then this Bundle contains the data it most
-     * recently supplied in onSaveInstanceState(Bundle). Note: Otherwise it is null.
+     * @param savedInstanceState Si la actividad está siendo re-inicializada después de
+     * haber sido previamente cerrada, este Bundle contiene los datos más recientes
+     * suministrados en onSaveInstanceState(Bundle). Nota: De lo contrario, es null.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Initialize UI elements
+        // Inicializar elementos de la interfaz de usuario
         logoImage = findViewById(R.id.logoImage);
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
@@ -65,11 +65,11 @@ public class LoginActivity extends AppCompatActivity {
         forgotPasswordText = findViewById(R.id.forgotPasswordText);
         createAccountText = findViewById(R.id.createAccountText);
 
-        // Initialize Firebase Auth
+        // Inicializar Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-        configureGoogleSignIn(); // Initialize Google Sign-In configuration
+        configureGoogleSignIn(); // Inicializar configuración de Google Sign-In
 
-        // Set up login button click listener
+        // Configurar listener para el botón de inicio de sesión
         loginButton.setOnClickListener(v -> {
             String email = emailEditText.getText().toString().trim();
             String password = passwordEditText.getText().toString().trim();
@@ -99,24 +99,24 @@ public class LoginActivity extends AppCompatActivity {
                     });
         });
 
-        // Set up Google Sign-In button click listener
+        // Configurar listener para el botón de Google Sign-In
         googleButton.setOnClickListener(v -> signInWithGoogle());
 
-        // Set up forgot password text click listener
+        // Configurar listener para el texto de "Olvidé mi contraseña"
         forgotPasswordText.setOnClickListener(v -> {
             String url = "https://kitchenia-a5d3d.firebaseapp.com/__/auth/action?mode=action&oobCode=code";
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
         });
 
-        // Set up create account text click listener
+        // Configurar listener para el texto de "Crear cuenta"
         createAccountText.setOnClickListener(v ->
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class))
         );
     }
 
     /**
-     * Configures Google Sign-In options.
+     * Configura las opciones de Google Sign-In.
      */
     private void configureGoogleSignIn() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -128,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * Initiates Google Sign-In process.
+     * Inicia el proceso de Google Sign-In.
      */
     private void signInWithGoogle() {
         Intent signInIntent = googleSignInClient.getSignInIntent();
@@ -136,11 +136,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * Handles the result of the Google Sign-In intent.
+     * Maneja el resultado del intent de Google Sign-In.
      *
-     * @param requestCode The request code passed to startActivityForResult().
-     * @param resultCode The result code returned by the child activity.
-     * @param data An Intent that carries the result data.
+     * @param requestCode El código de solicitud pasado a startActivityForResult().
+     * @param resultCode El código de resultado devuelto por la actividad hija.
+     * @param data Un Intent que lleva los datos del resultado.
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -157,8 +157,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the activity is started.
-     * Checks if the user is already signed in and redirects to MainActivity if so.
+     * Llamado cuando la actividad es iniciada.
+     * Verifica si el usuario ya ha iniciado sesión y redirige a MainActivity si es así.
      */
     @Override
     protected void onStart() {
@@ -170,9 +170,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * Authenticates the user with Firebase using Google Sign-In credentials.
+     * Autentica al usuario con Firebase usando las credenciales de Google Sign-In.
      *
-     * @param account The GoogleSignInAccount obtained from the Google Sign-In intent.
+     * @param account La cuenta de GoogleSignInAccount obtenida del intent de Google Sign-In.
      */
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
