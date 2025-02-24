@@ -44,7 +44,6 @@ public class RegisterActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         etPasswordConfirm = findViewById(R.id.etPasswordConfirm);
         btnCrearCuenta = findViewById(R.id.btnCrearCuenta);
-        googleButton = findViewById(R.id.googleButton);
         loginText = findViewById(R.id.loginText); // Inicialización del nuevo botón
 
         // Initialize Firebase instances
