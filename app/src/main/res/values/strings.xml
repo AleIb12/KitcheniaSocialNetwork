@@ -1,4 +1,17 @@
 <resources>
     <string name="profile_image">Foto de perfil</string>
     <string name="app_name">Kitchenia</string>
+    <string name="invalid_email_format">Formato de correo inválido</string>
+    <string name="invalid_password">La contraseña debe contener letras y dígitos, mínimo 6 caracteres</string>
+    <string name="login_error">Error en el inicio de sesión</string>
+    <string name="google_login_error">Error al iniciar sesión con Google</string>
+    <string name="reset_password">Recuperar contraseña</string>
+    <string name="enter_email_reset">Ingresa tu email para enviar el enlace de recuperación</string>
+    <string name="send">Enviar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="reset_email_sent">Email de recuperación enviado</string>
+    <string name="reset_email_error">Error al enviar email de recuperación</string>
+    <string name="please_wait">Por favor espera…</string>
+    <string name="error_user_not_found">Usuario no registrado</string>
+    <string name="error_invalid_credentials">Credenciales inválidas</string>
 </resources>

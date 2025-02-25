@@ -47,6 +47,8 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.core)
     androidTestImplementation(libs.ext.junit)
+    implementation ("com.google.android.gms:play-services-auth:21.3.0")
+    implementation ("com.google.firebase:firebase-auth:23.2.0")
     androidTestImplementation(libs.espresso.core)
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     compileOnly("org.projectlombok:lombok:1.18.36")
