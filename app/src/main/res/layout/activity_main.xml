@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_reposteria"
-    android:padding="16dp"
+    android:padding="0dp"
     tools:context=".MainActivity">
 
     <!-- Search minimalista con fondo redondeado -->
     <SearchView
         android:id="@+id/searchView"
         android:layout_width="0dp"
+        android:padding="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:background="@drawable/rounded_bg"
@@ -24,6 +25,7 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
+        android:padding="16dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
@@ -35,6 +37,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
+            android:padding="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:nestedScrollingEnabled="false" />
