@@ -292,40 +292,47 @@ public class UserProfileActivity extends AppCompatActivity {
      *
      * @param imageUri La URI de la imagen seleccionada.
      */
-    private void subirImagenAFirebase(Uri imageUri) {
-        progressDialog.show();
+   private void subirImagenAFirebase(Uri imageUri) {
+       if (progressDialog == null) {
+           progressDialog = new ProgressDialog(this);
+           progressDialog.setMessage("Actualizando imagen de perfil...");
+       }
+       progressDialog.show();
 
-        StorageReference ref = storage.getReference().child("imagenes/" + System.currentTimeMillis() + ".jpg");
-        ref.putFile(imageUri)
-            .addOnSuccessListener(taskSnapshot ->
-                ref.getDownloadUrl()
-                    .addOnSuccessListener(uri -> {
-                        String descripcion = editTextDescripcion.getText().toString();
-                        String currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+       String userId = mAuth.getCurrentUser().getUid();
+       StorageReference ref = storageRef.child(userId + ".jpg");
 
-                        Imagen imagen = new Imagen(descripcion, uri.toString());
-                        imagen.setPublicador(currentUserEmail);
+       ref.putFile(imageUri)
+           .addOnSuccessListener(taskSnapshot -> {
+               ref.getDownloadUrl().addOnSuccessListener(uri -> {
+                   // Actualizar URL en SharedPreferences
+                   preferences.edit()
+                       .putString("USER_IMAGE_URL", uri.toString())
+                       .apply();
 
-                        firestore.collection("imagenes")
-                            .add(imagen)
-                            .addOnSuccessListener(documentReference -> {
-                                progressDialog.dismiss();
-                                Toast.makeText(UserProfileActivity.this, "Imagen subida exitosamente", Toast.LENGTH_SHORT).show();
-                            })
-                            .addOnFailureListener(e -> {
-                                progressDialog.dismiss();
-                                Toast.makeText(UserProfileActivity.this, "Error al guardar datos en Firestore", Toast.LENGTH_SHORT).show();
-                            });
-                    })
-                    .addOnFailureListener(e -> {
-                        progressDialog.dismiss();
-                        Toast.makeText(UserProfileActivity.this, "Error al obtener URL de descarga", Toast.LENGTH_SHORT).show();
-                    }))
-            .addOnFailureListener(e -> {
-                progressDialog.dismiss();
-                Toast.makeText(UserProfileActivity.this, "Error al subir imagen", Toast.LENGTH_SHORT).show();
-            });
-    }
+                   // Actualizar URL en Firestore
+                   db.collection("users")
+                       .document(userId)
+                       .update("profileImageUrl", uri.toString())
+                       .addOnSuccessListener(unused -> {
+                           progressDialog.dismiss();
+                           Toast.makeText(UserProfileActivity.this,
+                               "Imagen de perfil actualizada", Toast.LENGTH_SHORT).show();
+                           cargarImagenPerfil(); // Recargar la imagen
+                       })
+                       .addOnFailureListener(e -> {
+                           progressDialog.dismiss();
+                           Toast.makeText(UserProfileActivity.this,
+                               "Error al actualizar imagen", Toast.LENGTH_SHORT).show();
+                       });
+               });
+           })
+           .addOnFailureListener(e -> {
+               progressDialog.dismiss();
+               Toast.makeText(UserProfileActivity.this,
+                   "Error al subir imagen", Toast.LENGTH_SHORT).show();
+           });
+   }
 
     /**
      * Carga la imagen de perfil almacenada (si existe).
